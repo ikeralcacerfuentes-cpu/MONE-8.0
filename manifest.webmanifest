@@ -1,0 +1,24 @@
+{
+  "name": "MONE",
+  "short_name": "MONE",
+  "description": "Mobilitat que acompanya. MVP pilot a València.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4fbf6",
+  "theme_color": "#2e7d32",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

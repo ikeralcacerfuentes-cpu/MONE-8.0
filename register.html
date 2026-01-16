@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MONE · Registro</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#2e7d32">
+  <link rel="icon" href="logo.png">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page">
+  <main class="container">
+    <header class="hero">
+      <div class="hero-top">
+        <div class="brandrow">
+          <img src="logo.png" alt="MONE logo" class="brandlogo">
+          <div>
+            <div class="logo">MONE</div>
+            <div class="muted small">Mobilitat que acompanya</div>
+          </div>
+        </div>
+        <span class="pill pill-soft">Registro</span>
+      </div>
+
+      <h1>Crear cuenta</h1>
+      <p class="sub">El registro crea tu usuario en la base de datos (Sheets).</p>
+    </header>
+
+    <section class="card">
+      <h2 class="h2">Registro</h2>
+
+      <div class="grid2">
+        <div>
+          <label class="label">Nombre</label>
+          <input id="regName" class="input" placeholder="Ej. Carmen" />
+        </div>
+        <div>
+          <label class="label">Rol</label>
+          <select id="regRole" class="input">
+            <option value="acompañado">Acompañado</option>
+            <option value="acompañante">Acompañante</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="label">Barrio (centro València)</label>
+      <select id="regZone" class="input">
+        <option value="Ruzafa">Ruzafa</option>
+        <option value="El Carme">El Carme</option>
+        <option value="Sant Francesc">Sant Francesc</option>
+        <option value="La Xerea">La Xerea</option>
+        <option value="El Pilar">El Pilar</option>
+        <option value="El Mercat">El Mercat</option>
+        <option value="Gran Via">Gran Via</option>
+        <option value="Pla del Remei">Pla del Remei</option>
+      </select>
+
+      <div class="row gap">
+        <button class="btn primary" id="regBtn">Crear cuenta</button>
+        <a class="btn ghost" href="index.html" style="text-decoration:none; display:inline-flex; align-items:center;">Ya tengo cuenta</a>
+      </div>
+
+      <p class="hint">
+        Nota: los acompañantes quedan <b>pendientes de verificación</b> hasta que un admin los apruebe.
+      </p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    document.getElementById("regBtn").addEventListener("click", moneRegister);
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

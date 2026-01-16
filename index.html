@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MONE · Entrar</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#2e7d32">
+  <link rel="icon" href="logo.png">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page">
+  <main class="container">
+    <header class="hero">
+      <div class="hero-top">
+        <div class="brandrow">
+          <img src="logo.png" alt="MONE logo" class="brandlogo">
+          <div>
+            <div class="logo">MONE</div>
+            <div class="muted small">Mobilitat que acompanya</div>
+          </div>
+        </div>
+        <span class="pill pill-soft">Login</span>
+      </div>
+
+      <h1>Entrar</h1>
+      <p class="sub">Accede con tu nombre y rol (debe existir en el registro).</p>
+    </header>
+
+    <section class="card">
+      <h2 class="h2">Acceso</h2>
+
+      <div class="grid2">
+        <div>
+          <label class="label">Nombre</label>
+          <input id="name" class="input" placeholder="Ej. Carmen" />
+        </div>
+
+        <div>
+          <label class="label">Rol</label>
+          <select id="role" class="input">
+            <option value="acompañado">Acompañado</option>
+            <option value="acompañante">Acompañante</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row gap">
+        <button class="btn primary" id="enterBtn">Entrar</button>
+        <a class="btn ghost" href="register.html" style="text-decoration:none; display:inline-flex; align-items:center;">Crear cuenta</a>
+      </div>
+
+      <p class="hint">
+        Si no te encuentra, primero ve a <b>Crear cuenta</b>.
+      </p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    document.getElementById("enterBtn").addEventListener("click", moneLogin);
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

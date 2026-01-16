@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MONE · Dashboard</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#2e7d32">
+  <link rel="icon" href="logo.png">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brandrow">
+        <img src="logo.png" alt="MONE logo" class="brandlogo">
+        <div>
+          <div class="logo">MONE</div>
+          <div class="muted small">Mobilitat que acompanya</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="small muted">Sesión</div>
+      <div id="whoami" class="who"></div>
+      <div id="verifyTag" class="chip pending" style="display:none; margin-top:8px;">No verificado</div>
+    </div>
+
+    <nav class="nav">
+      <button class="navbtn active" id="navHome">Inicio</button>
+      <button class="navbtn" id="navNotif">
+        Notificaciones
+        <span class="badge" id="notifBadge" style="display:none;">0</span>
+      </button>
+      <button class="navbtn" id="navHelp">Cómo funciona</button>
+    </nav>
+
+    <div class="sidebar-actions">
+      <button class="btn ghost full" id="logoutBtn">Salir</button>
+      <button class="btn danger full" id="resetBtn">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 class="h1">Panel</h1>
+        <p class="muted">Base de datos real (Sheets) + aceptación automática + verificación.</p>
+      </div>
+      <span class="pill pill-soft">Escalable</span>
+    </header>
+
+    <!-- HOME -->
+    <section id="home" class="stack">
+
+      <!-- ACOMPAÑADO -->
+      <section class="card" id="view-acompañado" style="display:none;">
+        <div class="cardhead">
+          <div>
+            <h2 class="h2">Solicitar acompañamiento</h2>
+            <p class="muted">Selecciona tipo, día y hora. Quedará en “Nueva” hasta que un acompañante la acepte.</p>
+          </div>
+          <span class="pill pill-green">Acompañado</span>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <label class="label">Tipo</label>
+            <select id="reqType" class="input">
+              <option value="Cita médica">Cita médica</option>
+              <option value="Compra/gestión esencial">Compra/gestión esencial</option>
+              <option value="Trámites administrativos">Trámites administrativos</option>
+              <option value="Acompañamiento a rehabilitación">Acompañamiento a rehabilitación</option>
+              <option value="Recados / farmacia">Recados / farmacia</option>
+              <option value="Transporte público">Transporte público</option>
+              <option value="Paseo / movilidad activa">Paseo / movilidad activa</option>
+              <option value="Acompañamiento a actividad comunitaria">Actividad comunitaria</option>
+            </select>
+          </div>
+          <div>
+            <label class="label">Día</label>
+            <input id="reqDate" class="input" type="date" />
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <label class="label">Hora</label>
+            <input id="reqTime" class="input" type="time" />
+          </div>
+          <div>
+            <label class="label">Notas (opcional)</label>
+            <input id="reqNotes" class="input" placeholder="Ej. silla de ruedas / necesito ascensor" />
+          </div>
+        </div>
+
+        <button class="btn primary" id="createReqBtn">Crear solicitud</button>
+
+        <h3 class="h3">Mis solicitudes</h3>
+        <div id="myRequests" class="list"></div>
+      </section>
+
+      <!-- ACOMPAÑANTE -->
+      <section class="card" id="view-acompañante" style="display:none;">
+        <div class="cardhead">
+          <div>
+            <h2 class="h2">Solicitudes disponibles</h2>
+            <p class="muted">Verás las solicitudes NUEVAS en tu barrio. Aceptar = se la queda el primero.</p>
+          </div>
+          <span class="pill pill-green">Acompañante</span>
+        </div>
+
+        <h3 class="h3">Disponibles</h3>
+        <div id="availableRequests" class="list"></div>
+
+        <h3 class="h3">En curso / completadas</h3>
+        <div id="myAssignmentsActive" class="list"></div>
+      </section>
+
+      <!-- ADMIN -->
+      <section class="card" id="view-admin" style="display:none;">
+        <div class="cardhead">
+          <div>
+            <h2 class="h2">Admin · Verificación de acompañantes</h2>
+            <p class="muted">Verifica acompañantes para que puedan aceptar solicitudes.</p>
+          </div>
+          <span class="pill pill-green">Admin</span>
+        </div>
+
+        <h3 class="h3">Acompañantes</h3>
+        <div id="adminUsers" class="list"></div>
+      </section>
+
+    </section>
+
+    <!-- NOTIFICATIONS -->
+    <section id="notifications" class="stack" style="display:none;">
+      <section class="card">
+        <div class="cardhead">
+          <div>
+            <h2 class="h2">Notificaciones</h2>
+            <p class="muted">Mensajes internos del sistema.</p>
+          </div>
+          <span class="pill pill-soft" id="notifCountPill">0 sin leer</span>
+        </div>
+
+        <div class="row gap">
+          <button class="btn" id="markAllReadBtn">Marcar todo como leído</button>
+          <button class="btn danger" id="clearNotifBtn">Vaciar notificaciones</button>
+        </div>
+
+        <div id="notifList" class="list"></div>
+      </section>
+    </section>
+
+    <!-- HELP -->
+    <section id="help" class="stack" style="display:none;">
+      <section class="card">
+        <h2 class="h2">Cómo funciona</h2>
+        <ol class="steps">
+          <li><b>Acompañado</b> crea una solicitud (día/hora).</li>
+          <li><b>Acompañante verificado</b> ve solicitudes NUEVAS y acepta.</li>
+          <li>El acompañante marca <b>finalizado</b>.</li>
+          <li>El acompañado <b>confirma</b>.</li>
+          <li>Ambos valoran con estrellas.</li>
+        </ol>
+      </section>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    document.getElementById("logoutBtn").addEventListener("click", moneLogout);
+    document.getElementById("resetBtn").addEventListener("click", moneResetAll);
+
+    document.getElementById("navHome").addEventListener("click", () => moneNav("home"));
+    document.getElementById("navNotif").addEventListener("click", () => moneNav("notifications"));
+    document.getElementById("navHelp").addEventListener("click", () => moneNav("help"));
+
+    document.getElementById("createReqBtn")?.addEventListener("click", moneCreateRequest);
+    document.getElementById("markAllReadBtn").addEventListener("click", moneMarkAllNotificationsRead);
+    document.getElementById("clearNotifBtn").addEventListener("click", moneClearNotifications);
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+      });
+    }
+
+    moneBootDashboard();
+  </script>
+</body>
+</html>
